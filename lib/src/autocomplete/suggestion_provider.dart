@@ -3,7 +3,7 @@ import 'dart:async';
 import 'suggestion.dart';
 import 'suggestion_request.dart';
 
-/// Source of completion candidates for a [CodeController].
+/// Source of completion candidates for a CodeController.
 ///
 /// Implementations are free to combine in-buffer words, language keywords,
 /// LSP responses, schema-driven field catalogs, or any other origin. The
