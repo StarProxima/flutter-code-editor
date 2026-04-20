@@ -25,7 +25,7 @@ void main() {
   group('SuggestionProvider contract', () {
     const request = SuggestionRequest(text: '', offset: 0, prefix: '');
 
-    test('sync provider returns the same list it was built with', () async {
+    test('sync provider returns the same list it was built with', () {
       const items = <Suggestion>[
         Suggestion(label: 'a', type: SuggestionType.field, priority: 2),
         Suggestion(label: 'b', type: SuggestionType.enumValue),
@@ -49,22 +49,23 @@ void main() {
     });
 
     test(
-        'provider is the source of truth for ordering '
-        '(caller is not expected to re-sort)', () async {
-      const unsorted = <Suggestion>[
-        Suggestion(label: 'beta'),
-        Suggestion(label: 'alpha'),
-        Suggestion(label: 'gamma'),
-      ];
-      final provider = _FixedProvider(unsorted);
+      'provider is the source of truth for ordering '
+      '(caller is not expected to re-sort)',
+      () {
+        const unsorted = <Suggestion>[
+          Suggestion(label: 'beta'),
+          Suggestion(label: 'alpha'),
+          Suggestion(label: 'gamma'),
+        ];
+        final provider = _FixedProvider(unsorted);
 
-      final result = provider.suggestionsFor(request);
+        final result = provider.suggestionsFor(request);
 
-      expect(result.map((e) => e.label).toList(), <String>[
-        'beta',
-        'alpha',
-        'gamma',
-      ]);
-    });
+        expect(
+          result.map((e) => e.label).toList(),
+          <String>['beta', 'alpha', 'gamma'],
+        );
+      },
+    );
   });
 }

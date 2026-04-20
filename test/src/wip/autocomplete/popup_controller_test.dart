@@ -54,6 +54,24 @@ void main() {
 
         expect(controller.shouldShow, isFalse);
       });
+
+      test(
+        'a second showItems resets selectedIndex and replaces the list',
+        () {
+          controller.showItems(const [
+            Suggestion(label: 'a'),
+            Suggestion(label: 'b'),
+            Suggestion(label: 'c'),
+          ]);
+          controller.selectedIndex = 2;
+
+          controller.showItems(const [Suggestion(label: 'x')]);
+
+          expect(controller.items.single, const Suggestion(label: 'x'));
+          expect(controller.selectedIndex, 0);
+          expect(controller.shouldShow, isTrue);
+        },
+      );
     });
 
     group('show(List<String>) backward compatibility', () {

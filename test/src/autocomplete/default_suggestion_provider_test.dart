@@ -43,5 +43,17 @@ void main() {
 
       expect(provider.autocompleter, same(ac));
     });
+
+    test('respects Autocompleter.blacklist', () async {
+      final ac = Autocompleter()
+        ..setCustomWords(['foo', 'foobar'])
+        ..blacklist = ['foo'];
+      final provider = DefaultSuggestionProvider(ac);
+
+      const request = SuggestionRequest(text: 'f', offset: 1, prefix: 'f');
+      final result = await provider.suggestionsFor(request);
+
+      expect(result.map((e) => e.label), ['foobar']);
+    });
   });
 }

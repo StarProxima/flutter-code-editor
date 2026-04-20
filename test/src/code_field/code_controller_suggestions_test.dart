@@ -115,5 +115,16 @@ void main() {
 
       expect(controller.popupController.shouldShow, isFalse);
     });
+
+    test('assigning the same provider instance is a no-op', () {
+      final controller = CodeController(text: '');
+      final same = controller.suggestionProvider;
+      var notifications = 0;
+      controller.addListener(() => notifications++);
+
+      controller.suggestionProvider = same;
+
+      expect(notifications, 0);
+    });
   });
 }
