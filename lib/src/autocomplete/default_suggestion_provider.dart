@@ -20,7 +20,7 @@ class DefaultSuggestionProvider implements SuggestionProvider {
   Future<List<Suggestion>> suggestionsFor(SuggestionRequest request) async {
     final words = await autocompleter.getSuggestions(request.prefix);
     return words
-        .map((w) => Suggestion(label: w, type: SuggestionType.text))
+        .map((w) => Suggestion(label: w))
         .toList(growable: false);
   }
 }

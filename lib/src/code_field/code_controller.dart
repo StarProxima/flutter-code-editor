@@ -10,9 +10,6 @@ import 'package:meta/meta.dart';
 
 import '../../flutter_code_editor.dart';
 import '../autocomplete/autocompleter.dart';
-import '../autocomplete/default_suggestion_provider.dart';
-import '../autocomplete/suggestion_provider.dart';
-import '../autocomplete/suggestion_request.dart';
 import '../code/code_edit_result.dart';
 import '../code/key_event.dart';
 import '../code_modifiers/insertion.dart';

@@ -1,8 +1,8 @@
+import 'package:flutter/widgets.dart';
 import 'package:flutter_code_editor/src/autocomplete/suggestion.dart';
 import 'package:flutter_code_editor/src/autocomplete/suggestion_provider.dart';
 import 'package:flutter_code_editor/src/autocomplete/suggestion_request.dart';
 import 'package:flutter_code_editor/src/code_field/code_controller.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Test double that records every request it received and returns a fixed
@@ -32,14 +32,14 @@ void main() {
         controller.autocompleter.setCustomWords(['apple', 'apricot']);
 
         // Simulate user typing a prefix and invoking suggestions.
-        controller.value = TextEditingValue(
+        controller.value = const TextEditingValue(
           text: 'a',
-          selection: const TextSelection.collapsed(offset: 1),
+          selection: TextSelection.collapsed(offset: 1),
         );
         await controller.generateSuggestions();
 
         expect(controller.popupController.suggestions,
-            containsAll(['apple', 'apricot']));
+            containsAll(['apple', 'apricot']),);
       },
     );
 
@@ -62,15 +62,15 @@ void main() {
         suggestionProvider: provider,
       );
 
-      controller.value = TextEditingValue(
+      controller.value = const TextEditingValue(
         text: 'p',
-        selection: const TextSelection.collapsed(offset: 1),
+        selection: TextSelection.collapsed(offset: 1),
       );
       await controller.generateSuggestions();
 
       expect(controller.popupController.items, custom);
       expect(controller.popupController.suggestions,
-          ['title', 'platform_is']);
+          ['title', 'platform_is'],);
       // The controller may also fire generateSuggestions via its change
       // listener, so we assert the request was made at least once with the
       // expected editor state rather than pinning down a specific count.
@@ -88,15 +88,15 @@ void main() {
       ]);
 
       controller.suggestionProvider = replacement;
-      controller.value = TextEditingValue(
+      controller.value = const TextEditingValue(
         text: 'z',
-        selection: const TextSelection.collapsed(offset: 1),
+        selection: TextSelection.collapsed(offset: 1),
       );
       await controller.generateSuggestions();
 
       expect(controller.popupController.items.single.label, 'zzz');
       expect(controller.popupController.items.single.type,
-          SuggestionType.custom);
+          SuggestionType.custom,);
       expect(replacement.received, isNotEmpty);
     });
 
@@ -107,9 +107,9 @@ void main() {
         suggestionProvider: provider,
       );
 
-      controller.value = TextEditingValue(
+      controller.value = const TextEditingValue(
         text: 'q',
-        selection: const TextSelection.collapsed(offset: 1),
+        selection: TextSelection.collapsed(offset: 1),
       );
       await controller.generateSuggestions();
 

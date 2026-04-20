@@ -32,7 +32,7 @@ void main() {
       ];
       final provider = _FixedProvider(items);
 
-      final result = await provider.suggestionsFor(request);
+      final result = provider.suggestionsFor(request);
 
       expect(result, items);
     });
@@ -58,7 +58,7 @@ void main() {
       ];
       final provider = _FixedProvider(unsorted);
 
-      final result = await provider.suggestionsFor(request);
+      final result = provider.suggestionsFor(request);
 
       expect(result.map((e) => e.label).toList(), <String>[
         'beta',

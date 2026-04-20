@@ -5,6 +5,11 @@ export 'src/analyzer/models/analysis_result.dart';
 export 'src/analyzer/models/issue.dart';
 export 'src/analyzer/models/issue_type.dart';
 
+export 'src/autocomplete/default_suggestion_provider.dart';
+export 'src/autocomplete/suggestion.dart';
+export 'src/autocomplete/suggestion_provider.dart';
+export 'src/autocomplete/suggestion_request.dart';
+
 export 'src/code/code.dart';
 export 'src/code/code_line.dart';
 export 'src/code/string.dart';

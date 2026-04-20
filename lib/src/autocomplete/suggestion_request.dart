@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:highlight/highlight_core.dart';
 
+import 'suggestion_provider.dart';
+
 /// A snapshot of the editor state used to ask a [SuggestionProvider]
 /// for completion candidates.
 ///

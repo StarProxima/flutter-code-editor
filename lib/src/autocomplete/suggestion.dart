@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 
+import 'suggestion_provider.dart';
+
 /// A single completion candidate returned by a [SuggestionProvider].
 ///
 /// The class decouples the user-facing label from the text that is actually
