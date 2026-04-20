@@ -104,6 +104,22 @@ class CodeController extends TextEditingController {
   final _modifierMap = <String, CodeModifier>{};
   late PopupController popupController;
   final autocompleter = Autocompleter();
+
+  late SuggestionProvider _suggestionProvider;
+
+  /// Source of completion candidates passed to the popup.
+  ///
+  /// Defaults to a [DefaultSuggestionProvider] wrapping the built-in
+  /// [autocompleter], which preserves the out-of-the-box behavior.
+  /// Assign a custom [SuggestionProvider] to plug in schema-driven,
+  /// LSP-backed, or any other completion source.
+  SuggestionProvider get suggestionProvider => _suggestionProvider;
+
+  set suggestionProvider(SuggestionProvider value) {
+    if (identical(_suggestionProvider, value)) return;
+    _suggestionProvider = value;
+    notifyListeners();
+  }
   late final historyController = CodeHistoryController(codeController: this);
 
   @internal
@@ -164,10 +180,13 @@ class CodeController extends TextEditingController {
     this.readOnly = false,
     this.params = const EditorParams(),
     this.modifiers = defaultCodeModifiers,
+    SuggestionProvider? suggestionProvider,
   })  : _analyzer = analyzer,
         _readOnlySectionNames = readOnlySectionNames,
         _code = Code.empty,
         _isTabReplacementEnabled = modifiers.any((e) => e is TabModifier) {
+    _suggestionProvider =
+        suggestionProvider ?? DefaultSuggestionProvider(autocompleter);
     setLanguage(language, analyzer: analyzer);
     this.visibleSectionNames = visibleSectionNames;
     _code = _createCode(text ?? '');
@@ -819,11 +838,16 @@ class CodeController extends TextEditingController {
       return;
     }
 
-    final suggestions =
-        (await autocompleter.getSuggestions(prefix)).toList(growable: false);
+    final request = SuggestionRequest(
+      text: text,
+      offset: selection.baseOffset,
+      prefix: prefix,
+      language: _language,
+    );
+    final suggestions = await _suggestionProvider.suggestionsFor(request);
 
     if (suggestions.isNotEmpty) {
-      popupController.show(suggestions);
+      popupController.showItems(suggestions);
     } else {
       popupController.hide();
     }
